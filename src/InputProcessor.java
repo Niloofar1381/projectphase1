@@ -384,6 +384,36 @@ public class InputProcessor {
                     manager.logout();
                 }
             }
+            else if (input.contains("delete groupMessage")){
+                if (manager.checkLogin()==null)
+                {
+                    System.out.println("no one logged in...");
+                }
+                else {
+                    String[] splitInput = input.split("\\s");
+                    manager.deleteGroupMessage(splitInput);
+                }
+            }
+            else if (input.contains("delete message")){
+                if (manager.checkLogin()==null)
+                {
+                    System.out.println("no one logged in...");
+                }
+                else {
+                    String[] splitInput = input.split("\\s");
+                    manager.deleteMessage(splitInput);
+                }
+            }
+            else if (input.contains("leaveGroup")){
+                if (manager.checkLogin()==null)
+                {
+                    System.out.println("no one logged in...");
+                }
+                else {
+                    String[] splitInput = input.split("\\s");
+                    manager.leaveGroup(splitInput);
+                }
+            }
             else if(input.equals("end"))
             {
                 DataInitializer dataInitializer = new DataInitializer();

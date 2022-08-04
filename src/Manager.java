@@ -576,7 +576,20 @@ public class Manager {
             }
         }
     }
-
+    public void deleteMessage(String[] splitInput)
+    {
+        int messageId = Integer.parseInt(splitInput[2]);
+        if (searchMessage(messageId)==null){
+            System.out.println("message not found...");
+        }
+        else{
+            Message message = searchMessage(messageId);
+            messages.remove(message);
+            User user = message.getSender();
+            user.messageIds.remove(Integer.valueOf(messageId));
+            System.out.println("deleted successfully");
+        }
+    }
     public void showChats(String[] splitInput) {
         ArrayList<Message> selectedMessages = new ArrayList<>();
         ArrayList<User> selectedUsers = new ArrayList<>();
@@ -700,6 +713,25 @@ public class Manager {
             }
         }
 
+    }
+    public void leaveGroup(String[] splitInput){
+
+        String groupId = splitInput[1];
+        if (searchGroup(groupId)==null){
+            System.out.println("not found...");
+        }
+        else{
+            Group group = searchGroup(groupId);
+            if (!checkLogin().equals(group.getAdmin())){
+                group.getUsers().remove(checkLogin());
+                System.out.println("left successfully");
+            }
+            else{
+                group.setAdmin(group.getUsers().get(0));
+                group.getUsers().remove(0);
+                System.out.println("left successfully");
+            }
+        }
     }
 
     public void banUser(String[] splitInput) {
@@ -896,7 +928,18 @@ public class Manager {
         }
 
     }
-
+    public void deleteGroupMessage(String[] splitInput){
+        if (findGroupMessage(splitInput[1])==null){
+            System.out.println("not found...");
+        }
+        else {
+            GroupMessage groupMessage = findGroupMessage(splitInput[1]);
+            groupMessages.remove(groupMessage);
+            Group group = searchGroup(groupMessage.groupId);
+            group.getGroupMessages().remove(groupMessage);
+            System.out.println("deleted successfully");
+        }
+    }
     public void showGroupMessages(String[] splitInput) {
         boolean bool = false;
         if (searchGroup((splitInput[3])) == null) {
